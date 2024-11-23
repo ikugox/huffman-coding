@@ -52,6 +52,7 @@ func readEncodedFile(inputPath, outputPath string, code map[rune]string) error {
 }
 
 func readBitByBit(reader *bufio.Reader, writer *bufio.Writer, codeInverted map[string]rune) {
+	reader.ReadString('\n')
 	var currentBits string
 	for {
 		b, err := reader.ReadByte()
