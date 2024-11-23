@@ -5,33 +5,11 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strings"
 )
 
-const folderPath = "./input"
-
 func main() {
-	entries, err := os.ReadDir(folderPath)
-	if err != nil {
-		fmt.Println("Error reading directory:", err)
-		return
-	}
-	for _, entry := range entries {
-		if entry.IsDir() {
-			continue
-		}
-		if !strings.HasSuffix(entry.Name(), ".txt") {
-			continue
-		}
-		filePath := folderPath + "/" + entry.Name()
-		fmt.Printf("Found .txt file: %s\n", filePath)
-
-		data, freq := processFile(filePath)
-		root := generateHuffmanTree(data, freq)
-		codes := generateHuffmanCodes(root)
-
-		PrintHuffmanCodes(codes)
-	}
+	encodeFilesFromDir("./input")
+	decodeFilesFromDir("./encoded")
 }
 
 func processFile(filePath string) (data []rune, freq []int) {
