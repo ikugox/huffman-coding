@@ -7,15 +7,18 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 6 {
+	if !(len(os.Args) == 4 || len(os.Args) == 6) {
 		running := os.Args[0]
 		if strings.Contains(running, "/tmp/") {
 			running = "go run *.go"
 		}
-		fmt.Println("Usage: " + running + " <encode|decode> <-f|-d> <file/directory> -o <output>")
+		fmt.Println("Usage: " + running + " <encode|decode> <-f|-d> <file/directory> [-o <output>]")
 		return
 	}
-	coding, fd, fdName, outputName := os.Args[1], os.Args[2], os.Args[3], os.Args[5]
+	coding, fd, fdName, outputName := os.Args[1], os.Args[2], os.Args[3], os.Args[3]
+	if len(os.Args) == 6 {
+		outputName = os.Args[5]
+	}
 	if _, err := os.Stat(outputName); err != nil {
 		if err := os.Mkdir(outputName, os.FileMode(0755)); err != nil {
 			fmt.Printf("Error with <output> option %s :%s\n", outputName, err)

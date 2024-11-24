@@ -10,6 +10,10 @@ import (
 )
 
 func encodeFile(fileName, outputName string) {
+	if strings.HasSuffix(outputName, "/") {
+		lastSlash := strings.LastIndex(fileName, "/")
+		outputName += fileName[lastSlash+1:]
+	}
 	if !strings.HasSuffix(fileName, ".txt") {
 		fileName += ".txt"
 	}

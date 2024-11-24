@@ -9,6 +9,10 @@ import (
 )
 
 func decodeFile(fileName, outputName string) {
+	if strings.HasSuffix(outputName, "/") {
+		lastSlash := strings.LastIndex(fileName, "/")
+		outputName += fileName[lastSlash+1:]
+	}
 	if !strings.HasSuffix(fileName, ".huff") {
 		fileName += ".huff"
 	}
