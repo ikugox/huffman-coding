@@ -16,13 +16,20 @@ func main() {
 		return
 	}
 	coding, fd, fdName, outputName := os.Args[1], os.Args[2], os.Args[3], os.Args[5]
+	if _, err := os.Stat(outputName); err != nil {
+		if err := os.Mkdir(outputName, os.FileMode(0755)); err != nil {
+			fmt.Printf("Error with <output> option %s :%s\n", outputName, err)
+			return
+		}
+		fmt.Printf("Created folder named: %s\n", outputName)
+	}
 	if coding == "encode" {
 		if fd == "-f" {
 			encodeFile(fdName, outputName)
 		} else if fd == "-d" {
 			encodeFilesFromDir(fdName, outputName)
 		} else {
-			fmt.Printf("Invalid option: %s", fd)
+			fmt.Printf("Invalid option: %s\n", fd)
 		}
 	} else if coding == "decode" {
 		if fd == "-f" {
@@ -30,9 +37,9 @@ func main() {
 		} else if fd == "-d" {
 			decodeFilesFromDir(fdName, outputName)
 		} else {
-			fmt.Printf("Invalid option: %s", fd)
+			fmt.Printf("Invalid option: %s\n", fd)
 		}
 	} else {
-		fmt.Printf("Invalid option: %s", coding)
+		fmt.Printf("Invalid option: %s\n", coding)
 	}
 }

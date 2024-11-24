@@ -29,7 +29,11 @@ func encodeFile(fileName, outputName string) {
 	root := generateHuffmanTree(data, freq)
 	codes := generateHuffmanCodes(root)
 
-	writeEncodedFile(fileName, outputName, codes)
+	err := writeEncodedFile(fileName, outputName, codes)
+	if err != nil {
+		fmt.Printf("Error writting to file: %s\n", err)
+		return
+	}
 	fmt.Printf("Encoding to .huff file: %s\n", outputName)
 	// PrintHuffmanCodes(codes)
 }
@@ -73,7 +77,7 @@ func writeBitByBit(reader *bufio.Reader, writer *bufio.Writer, code map[rune]str
 			if err == io.EOF {
 				break
 			}
-			fmt.Println("Error reading file:", err)
+			fmt.Printf("Error reading file: %s\n", err)
 			return
 		}
 		code := code[char]
@@ -111,7 +115,7 @@ func processFile(filePath string) (data []rune, freq []int) {
 			if err == io.EOF {
 				break
 			}
-			fmt.Println("Error reading file:", err)
+			fmt.Printf("Error reading file: %s\n", err)
 			return nil, nil
 		}
 		hashmap[char]++
@@ -128,7 +132,7 @@ func processFile(filePath string) (data []rune, freq []int) {
 func encodeFilesFromDir(dirName, outputDirName string) {
 	files, err := os.ReadDir(dirName)
 	if err != nil {
-		fmt.Println("Error reading directory:", err)
+		fmt.Printf("Error reading directory: %s\n", err)
 		return
 	}
 	for _, file := range files {

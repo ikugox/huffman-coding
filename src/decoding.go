@@ -23,11 +23,14 @@ func decodeFile(fileName, outputName string) {
 
 	code, err := readMetadata(fileName)
 	if err != nil {
-		fmt.Println("Error reading metadata (huffman code):", err)
+		fmt.Printf("Error reading metadata (huffman code): %s\n", err)
 		return
 	}
 
-	readEncodedFile(fileName, outputName, code)
+	err = readEncodedFile(fileName, outputName, code)
+	if err != nil {
+		fmt.Printf("Error reading file: %s\n", err)
+	}
 	fmt.Printf("Decoding to .txt file: %s\n", outputName)
 	// PrintHuffmanCodes(codes)
 }
@@ -77,7 +80,7 @@ func readBitByBit(reader *bufio.Reader, writer *bufio.Writer, codeInverted map[s
 			if char, exists := codeInverted[currentBits]; exists {
 				_, err := writer.WriteRune(char)
 				if err != nil {
-					fmt.Println("Error writting rune:", err)
+					fmt.Printf("Error writting rune %c: %s\n", char, err)
 					return
 				}
 				currentBits = ""
@@ -107,7 +110,7 @@ func readMetadata(filePath string) (map[rune]string, error) {
 func decodeFilesFromDir(dirName, outputDirName string) {
 	files, err := os.ReadDir(dirName)
 	if err != nil {
-		fmt.Println("Error reading directory:", err)
+		fmt.Printf("Error reading directory: %s\n", err)
 		return
 	}
 	for _, file := range files {
@@ -117,6 +120,6 @@ func decodeFilesFromDir(dirName, outputDirName string) {
 		if !strings.HasSuffix(file.Name(), ".huff") {
 			continue
 		}
-		encodeFile(dirName+"/"+file.Name(), outputDirName+"/"+file.Name())
+		decodeFile(dirName+"/"+file.Name(), outputDirName+"/"+file.Name())
 	}
 }
