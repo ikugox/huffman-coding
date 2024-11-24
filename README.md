@@ -8,6 +8,16 @@ A CLI tool for encoding or decoding .txt files using the huffman algorithm.
 ```bash
     <encode|decode> <-f|-d> <file/directory> [-o <output>]
 ```
+
+* `<encode|decode>` - what to do with file/directory
+* `<-f|-d>` - specify if next line is file or directory
+* `<file/directory>` - the name of a specific file or folder
+    * if `-f` - file extensions (".txt" or ".huff") don't matter
+    * if `-d` - "./" in beggining or "/" at end doesn't matter
+* `[-o <output>]` - (OPTIONAL) specify the file or directory where you want the output
+    * if `-f` - file extensions (".txt" or ".huff") don't matter
+    * if `-d` - "./" in beggining or "/" at end doesn't matter  
+                if the folder doesnt exist, it will be created
 ## Prerequisites
 
 - [Go](https://go.dev).
