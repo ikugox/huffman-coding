@@ -6,7 +6,7 @@ A CLI tool for encoding or decoding .txt files using the huffman algorithm.
 
 ## Usage
 ```bash
-    <encode|decode> <-f|-d> <file/directory> [-o <output>]
+{go run *.go|./huffman} <encode|decode> <-f|-d> <file/directory> [-o <output>]
 ```
 
 * `<encode|decode>` - what to do with file/directory
